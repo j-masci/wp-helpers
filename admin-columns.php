@@ -13,8 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 Class Admin_Columns{
 
     /**
-     * Inserts a column in the easiest and most straightforward way. Does the
-     * job in most cases.
+     * Insert an admin column with just this function call.
      *
      * @param array $post_types
      * @param $key
@@ -58,9 +57,9 @@ Class Admin_Columns{
             add_action( "manage_{$post_type}_posts_columns", $add_callback, $add_priority );
 
             // render the column (contents).
-            // force the render callback to be transformed into another callback.
             add_action( "manage_{$post_type}_posts_custom_column", function( $col, $post_id ) use ( $render_callback, $key ){
                 if ( $key && $key == $col ) {
+                    // take the $key away from $render_callback and give it only post ID
                     call_user_func_array( $render_callback, [ $post_id ] );
                 }
             }, $render_priority, 2 );
