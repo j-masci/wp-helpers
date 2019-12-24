@@ -6,6 +6,8 @@
 // todo: use auto loading instead
 include __DIR__ . '/admin-columns.php';
 include __DIR__ . '/ajax-config.php';
+include __DIR__ . '/theme-settings.php';
+include __DIR__ . '/post-type-superclass.php';
 include __DIR__ . '/wp-helper-functions.php';
 
 // perhaps we'll auto load, since some parts of the library might not be useful in many projects.
