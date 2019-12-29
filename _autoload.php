@@ -9,6 +9,7 @@ include __DIR__ . '/ajax-config.php';
 include __DIR__ . '/theme-settings.php';
 include __DIR__ . '/post-type-superclass.php';
 include __DIR__ . '/wp-helper-functions.php';
+include __DIR__ . '/types.php';
 
 // perhaps we'll auto load, since some parts of the library might not be useful in many projects.
 $autoload_class_map = [
