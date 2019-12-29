@@ -5,23 +5,13 @@ namespace JM;
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class MetaKeyMap
- * @package JM
- */
-Class MetaKeyMap{}
-
-/**
- * A superclass to extend for each of your post types in order to define
- * static methods for post meta getters etc.
+ * A class which you can extend for each of your custom post types. You can
+ * then define static methods related to the post type (ie. getters, setters,
+ * or w/e).
  *
- * It's sort of like an active record, but only static methods instead (what do we call this?)
- *
- * WP_Post is already basically an active record. Therefore, (in my experience), it's quite
- * ugly to make an object which you instantiate from a post ID or WP_Post object, which then
- * wraps a WP_Post object. Instead, pass a post ID or WP_Post object into each static method,
- * then the class can be useful for organizing your code.
- *
- * todo: I don't like this class name.
+ * In my experience, instantiating via a post ID and lazy loading a WP_Post
+ * into the object adds much more complexity than it's worth. Instead, just
+ * pass an ID or WP_Post object into each static method.
  *
  * Class Post_Type_Superclass
  * @package JM
@@ -34,43 +24,47 @@ Abstract Class Post_Type_Superclass{
     const POST_TYPE = "";
 
     /**
-     * A dictionary to explicitly declare your meta keys.
+     * A map (object) to define your meta keys and map them to the
+     * string values used in the database.
      *
-     * Doing so has many potential advantages, including code completion,
-     * prevention of typos, finding usages in code, and performing dynamic
-     * actions by looping through the list of keys.
+     * This helps with code completion, code lookup, etc.
      *
-     * The default is an empty object. You can use a stdClass if you want, but,
-     * an explicitly defined class might be easier for your IDE to understand.
+     * For example, if you have a meta key like "name" and put that
+     * string everywhere in your code, you can't just find all usages
+     * of "name" in your code and expect to find it.
+     *
+     * Example 1: self::$meta_keys::$name = "_name"
+     *
+     * Example 2: self::$meta_keys->name = "_name".
+     *
+     * todo: ... see below...
+     *
+     * I forget the name of the error but example 2 can cause
+     * issues in older version of PHP. For the time being, I'm not
+     * forcing you to do anything with this. However, if we define
+     * a class with all static methods then now we'll probably have to use
+     * reflection to loop through all statically defined properties. I don't
+     * want to handle the mess of sometimes static and sometimes not, so,
+     * maybe I'll look into this more before using it.
      *
      * @var object
      */
-    public static $meta_keys = (object) [];
+    public static $meta_keys;
 
     /**
-     * Define more logical default query args (than the WP default),
-     * which saves a few lines of code in some instances.
+     * Call this on each subclass that you extend...
      *
-     * In addition, the post type constant is normally also injected.
+     * Recommend that you call parent::init() inside the method.
      *
-     * @var array
+     * You could register your post type in here if you wanted. I'll leave it
+     * up to you whether or not you think you want that code in the same place or not.
      */
-    public static $default_query_args = [
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-    ];
+    public static function init(){
 
-    /**
-     * Need to call this once and once only per script.
-     *
-     * This exists because we cannot write:
-     *
-     * public static $meta_keys = new Explicitly_Named_Class()
-     *
-     * If you wanted to, you could register your post type in here, but I'll
-     * leave that up to you.
-     */
-    public static function init(){}
+        if ( is_null( self::$meta_keys ) ) {
+            self::$meta_keys = new stdClas();
+        }
+    }
 
     /**
      * Simply wraps get_post_meta.
@@ -96,7 +90,7 @@ Abstract Class Post_Type_Superclass{
      * @return \WP_Post[]
      */
     public static function query( array $args ) {
-        return get_posts( static::build_query_args( $args ) );
+        return get_posts( array_merge( self::get_default_query_args(), $args ) );
     }
 
     /**
@@ -106,32 +100,23 @@ Abstract Class Post_Type_Superclass{
      * @return WP_Query
      */
     public static function query_via_wp_query( array $args ) {
-        return new WP_Query( static::build_query_args( $args ) );
+        return new WP_Query( array_merge( self::get_default_query_args(), $args ) );
     }
 
     /**
-     * Injects logical default elements into your array, and the post type
-     * constant from the class from which you invoke this method.
-     *
-     * Makes your code a little cleaner in some instances.
-     *
-     * This exists in its own method so you can choose between get_posts()
-     * and new WP_Query()
-     *
-     * @param $args
      * @return array
      */
-    public static function build_query_args( array $args ) {
+    public static function get_default_query_args(){
 
-        $defaults = self::$default_query_args;
+        $ret = [
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+        ];
 
-        // in case this is called from the super class, do not inject
-        // the post type.
-        if( static::POST_TYPE ) {
-            $defaults['post_type'] = static::POST_TYPE;
+        if ( static::POST_TYPE ) {
+            $ret['post_type'] = static::POST_TYPE;
         }
 
-        return array_merge( $defaults, $args );
+        return $ret;
     }
-
 }

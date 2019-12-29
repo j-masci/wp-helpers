@@ -1,1 +1,1 @@
-Work in progress, modules for WordPress.
+Library for developing custom WordPress themes. Work in progress.  

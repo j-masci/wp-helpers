@@ -144,6 +144,24 @@ Class Str{
 
         return $str;
     }
+
+    /**
+     * @param $test
+     */
+    public static function perform_tests( \PHPUnit\Framework\TestCase $test ){
+
+        // todo: some of these are failing
+        $test::assertEquals( "lorem-ipsum-dolor",  Str::slugify( "Lorem Ipsum !@#$%^&*()    Dolor", true ), "slugify 1");
+        $test::assertEquals( "lorem-ipsum_dolor",  Str::slugify( "Lorem Ipsum !@#$%^&*()_   Dolor", true ), "slugify 2");
+        $test::assertEquals( "a-b",  Str::slugify( "a-b" ), "slugify 3");
+        $test::assertEquals( "a-b",  Str::slugify( "a----b" ), "slugify 4");
+        $test::assertEquals( "a-b",  Str::slugify( "a  b" ), "slugify 5");
+        $test::assertEquals( "a-b",  Str::slugify( "a - - - - b" ), "slugify 6");
+
+        $test::assertTrue( false, "idk" );
+
+
+    }
 }
 
 Class Arr{
