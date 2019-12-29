@@ -105,6 +105,8 @@ Class Ajax_Config
      * Register your global handler, and attach it to the actions which
      * fire in admin-ajax.php.
      *
+     * Todo: this method has 2 very different responsibilities and they should be split up.
+     *
      * @param callable $global_handler - accepts $this as a parameter
      */
     public function commit(Callable $global_handler)
