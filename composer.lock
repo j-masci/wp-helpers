@@ -1,0 +1,48 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "e24c33b1789baa733e6d6fdd4f23f4df",
+    "packages": [
+        {
+            "name": "jmasci/utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/j-masci/utils.git",
+                "reference": "31ca3d566b43ce89cbaae52d9b286b3b1b54fcb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/j-masci/utils/zipball/31ca3d566b43ce89cbaae52d9b286b3b1b54fcb1",
+                "reference": "31ca3d566b43ce89cbaae52d9b286b3b1b54fcb1",
+                "shasum": ""
+            },
+            "type": "library",
+            "authors": [
+                {
+                    "name": "Joel Home",
+                    "email": "masci.joel@gmail.com"
+                }
+            ],
+            "description": "Small library with basic PHP utilities",
+            "support": {
+                "source": "https://github.com/j-masci/utils/tree/master",
+                "issues": "https://github.com/j-masci/utils/issues"
+            },
+            "time": "2020-01-18T22:34:12+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "jmasci/utils": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

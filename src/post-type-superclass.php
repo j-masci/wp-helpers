@@ -1,6 +1,6 @@
 <?php
 
-namespace JM;
+namespace JMasci\WP;
 
 /**
  * A superclass to group static methods related to a custom post type.

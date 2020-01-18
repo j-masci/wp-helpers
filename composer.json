@@ -13,6 +13,14 @@
             "url": "https://github.com/j-masci/utils"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "JMasci\\WP\\": "src/"
+        },
+        "files": [
+            "src/wp-utils.php"
+        ]
+    },
     "require": {
         "jmasci/utils": "dev-master"
     }
