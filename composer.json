@@ -7,7 +7,13 @@
             "email": "masci.joel@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/j-masci/utils"
+        }
+    ],
     "require": {
-        "php": ">=5.4.0"
+        "jmasci/utils": "dev-master"
     }
 }
