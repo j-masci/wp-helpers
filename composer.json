@@ -1,0 +1,13 @@
+{
+    "name": "jmasci/wp-utils",
+    "description": "A collection of WordPress utilities geared towards custom theme developement",
+    "authors": [
+        {
+            "name": "Joel Masci",
+            "email": "masci.joel@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
