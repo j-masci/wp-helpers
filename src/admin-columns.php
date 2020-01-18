@@ -1,27 +1,27 @@
 <?php
 
-namespace JM;
-
-if ( ! defined( 'ABSPATH' ) ) exit;
+namespace JMasci\WP;
 
 /**
- * todo: could add more "get_add_callback" methods to give more control over the order of columns.
+ * todo: test support for non post type columns (not even sure what these are.. users? anything else? might already work the way we have it.)
+ *
+ * todo: make this a standalone module for people that want this but not all my other stuff
  *
  * Class Admin_Columns
- * @package JM
+ * @package JMasci\WP
  */
 Class Admin_Columns{
 
     /**
-     * Insert an admin column with just this function call.
+     * Inserts an admin column (in a way that's much easier than doing it the default WordPress way).
      *
-     * @param array $post_types
-     * @param $key
-     * @param $label
-     * @param $count_from_end
-     * @param callable $render_callback
-     * @param int $add_priority
-     * @param int $render_priority
+     * @param array $post_types - post or object types to apply this to.
+     * @param $key - Column key (make it unique, ie. "my_image_column")
+     * @param $label - Column label
+     * @param $count_from_end - the number of columns before the last column to insert this one.
+     * @param callable $render_callback - accepts a $post_id and echo's HTML output for the table cell.
+     * @param int $add_priority - hook priority for adding the column (this can change the resulting order of columns)
+     * @param int $render_priority - hook priority for rendering (this likely does not make any difference).
      */
     public static function insert( array $post_types, $key, $label, callable $render_callback, $count_from_end = 0, $add_priority = 20, $render_priority = 20 ) {
         $add_callback = self::get_add_callback_via_count_from_end( $key, $label, $count_from_end );
@@ -29,18 +29,15 @@ Class Admin_Columns{
     }
 
     /**
-     * There should exist wrappers for this method which are easier to call than this one directly,
-     * nevertheless, there may be times that you do need to call this.
+     * Inserts a column but forces you to define the $add_callback. It's better to use
+     * a wrapper function rather than calling this directly.
      *
-     * The render callback takes in only a post ID and does not need to worry about the key, which
-     * is more intuitive, although it makes it hard (impossible?) to use the same callback
-     * for many "columns" (note that the one column can apply to several post types however).
+     * If you call this while passing in a custom $add_callback and $render_callback,
+     * then that's fine, but you're not making your life any easier when compared to
+     * doing it the regular old WordPress way.
      *
-     * It may seem a bit odd that we require $key to be passed into this function for the sake
-     * of the render callback, and yet, the $add_callback needs to know about the $key, but we don't pass
-     * it along to the $add_callback. Instead, the $add_callback should have the same key bound to
-     * its closure. Ideally I would like to omit the $key parameter from this function but then it
-     * kind of makes the render callback less intuitive.
+     * Note that the render callback accepts only a post ID and not the column key. This is
+     * unlike the render callback that you would pass directly to the WordPress hook.
      *
      * @param array $post_types
      * @param $key
@@ -71,13 +68,13 @@ Class Admin_Columns{
      * based on the number of columns from the end, ie. 0 means add to the last
      * column.
      *
-     * This slightly less intuitive way happens to be useful as date is often
-     * the last column, and it turns out to be reasonable to add additional
-     * columns before the date.
+     * This is kind of the main purpose of the entire class, so that when you
+     * add columns, you don't have to repeat all of this nasty logic to insert
+     * a column in some particular oder. P.s. you can pass this to native
+     * WordPress hooks and use only this method while ignoring the rest of this
+     * class if you prefer.
      *
-     * Anchoring the column to always be before the date works too in some cases,
-     * but then you have to do ugly fallbacks if the date column does not exist
-     * for some reason.
+     * todo: maybe add more column insertion functions like this one (ie. insert a column before/after column with given key).
      *
      * @param $key
      * @param $label
