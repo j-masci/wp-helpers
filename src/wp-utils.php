@@ -64,15 +64,3 @@ function get_page_template_name( $filename, $default = null ) {
 function get_page_template( $post_id ) {
     return \get_post_meta( $post_id, '_wp_page_template', true );
 }
-
-/**
- * Safely JSON encode anything into an HTML attribute (array, object, html, etc.)
- *
- * In JS, use $.parseJSON or JSON.parse()
- *
- * @param $thing
- * @return string
- */
-function json_encode_for_html_attr( $thing ) {
-    return htmlspecialchars( json_encode( $thing ), ENT_QUOTES, 'UTF-8' );
-}
