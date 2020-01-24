@@ -1,16 +1,10 @@
 {
     "name": "jmasci/wp-utils",
-    "description": "A collection of WordPress utilities geared towards custom theme developement",
+    "description": "Utilities/helpers geared towards WordPress custom themes",
     "authors": [
         {
             "name": "Joel Masci",
             "email": "masci.joel@gmail.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/j-masci/utils"
         }
     ],
     "autoload": {
@@ -18,7 +12,5 @@
             "JMasci\\WP\\": "src/"
         }
     },
-    "require": {
-        "jmasci/utils": "dev-master"
-    }
+    "require": {}
 }
