@@ -22,7 +22,7 @@ Class Utils{
      *
      * @return string|void
      */
-    function get_current_wordpress_url(){
+    static function get_current_wordpress_url(){
         global $wp;
         return \home_url( $wp->request );
     }
@@ -34,7 +34,7 @@ Class Utils{
      * @param string $size
      * @return mixed
      */
-    function get_image_src( $attachment_id, $size = 'large' ){
+    static function get_image_src( $attachment_id, $size = 'large' ){
         $src = \wp_get_attachment_image_src( $attachment_id, $size );
         // better not to prefix the function call with @
         return @$src[0];
@@ -51,7 +51,7 @@ Class Utils{
      * @param null $default
      * @return null
      */
-    function get_page_template_name( $filename, $default = null ) {
+    static function get_page_template_name( $filename, $default = null ) {
 
         static $templates;
 
@@ -69,7 +69,7 @@ Class Utils{
      * @param $post_id
      * @return mixed
      */
-    function get_page_template( $post_id ) {
+    static function get_page_template( $post_id ) {
         return \get_post_meta( $post_id, '_wp_page_template', true );
     }
 
