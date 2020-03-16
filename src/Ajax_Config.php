@@ -82,7 +82,7 @@ Class Ajax_Config
      */
     public function admin_ajax_handler(){
 
-        $handler = $this->get( @$_REQUEST[$this->key_name] );
+        $handler = $this->get_handler( @$_REQUEST[$this->key_name] );
         $handler = $handler ? $handler : [];
 
         // pass even an empty handler array to the global callback. The global
