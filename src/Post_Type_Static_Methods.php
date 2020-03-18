@@ -49,7 +49,7 @@ Abstract Class Post_Type_Static_Methods{
     protected static $default_query_args = [
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'order_by' => [
+        'orderby' => [
             'menu_order' => 'ASC',
             'post_date' => 'DESC'
         ]
