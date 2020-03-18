@@ -49,6 +49,10 @@ Abstract Class Post_Type_Static_Methods{
     protected static $default_query_args = [
         'post_status' => 'publish',
         'posts_per_page' => -1,
+        'order_by' => [
+            'menu_order' => 'ASC',
+            'post_date' => 'DESC'
+        ]
     ];
 
     /**
@@ -95,7 +99,7 @@ Abstract Class Post_Type_Static_Methods{
      * @return \WP_Post[]
      */
     public static function get_posts( array $args ) {
-        return \get_posts( array_merge( self::get_default_query_args(), $args ) );
+        return \get_posts( array_merge( static::get_default_query_args(), $args ) );
     }
 
     /**
@@ -105,7 +109,7 @@ Abstract Class Post_Type_Static_Methods{
      * @return \WP_Query
      */
     public static function wp_query( array $args ) {
-        return new \WP_Query( array_merge( self::get_default_query_args(), $args ) );
+        return new \WP_Query( array_merge( static::get_default_query_args(), $args ) );
     }
 
     /**
@@ -113,7 +117,7 @@ Abstract Class Post_Type_Static_Methods{
      */
     public static function get_default_query_args(){
 
-        $ret = self::$default_query_args;
+        $ret = static::$default_query_args;
 
         if ( static::POST_TYPE ) {
             $ret['post_type'] = static::POST_TYPE;
